@@ -5,7 +5,7 @@
   <title>Checklist PDF Generator</title>
   <!-- jsPDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- jsPDF-AutoTable library -->
+  <!-- jsPDF-AutoTable plugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
@@ -13,7 +13,7 @@
 window.onload = async () => {
   const { jsPDF } = window.jspdf;
 
-  // Get URL parameters
+  // Get parameters from URL
   const params = new URLSearchParams(window.location.search);
   const candidateName = params.get("name") || "Unknown Candidate";
   const checklistParam = params.get("checklist") || "";
@@ -24,10 +24,8 @@ window.onload = async () => {
   // Create new PDF
   const doc = new jsPDF();
 
-  // Load a font that supports Cyrillic
-  // Using Google Fonts Roboto Regular as base64
+  // Load Roboto font from Google Fonts (supports Cyrillic)
   const fontUrl = "https://raw.githubusercontent.com/google/fonts/main/apache/roboto/Roboto-Regular.ttf";
-
   const response = await fetch(fontUrl);
   const fontBuffer = await response.arrayBuffer();
   const fontBase64 = btoa(
@@ -39,7 +37,7 @@ window.onload = async () => {
   doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
   doc.setFont("Roboto");
 
-  // Title
+  // Add title
   doc.setFontSize(16);
   doc.text("Candidate Checklist", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
 
@@ -52,14 +50,18 @@ window.onload = async () => {
     ? checklist.map((item, i) => [i + 1, item.trim()])
     : [["-", "No checklist items selected"]];
 
-  // Generate table
+  // Create table with jsPDF-AutoTable
   doc.autoTable({
     startY: 45,
     head: [['#', 'Checklist Item']],
     body: tableData,
-    styles: { font: "Roboto", fontSize: 12 },
+    styles: { font: "Roboto", fontSize: 12, cellPadding: 4 },
     headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
     theme: 'grid',
+    columnStyles: {
+      0: { cellWidth: 10 }, // number column
+      1: { cellWidth: 'auto' } // checklist text column
+    },
   });
 
   // Save PDF
