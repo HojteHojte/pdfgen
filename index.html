@@ -3,24 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>Checklist PDF Generator</title>
+  <!-- jsPDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- jsPDF-AutoTable library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 <script>
-window.onload = () => {
+window.onload = async () => {
   const { jsPDF } = window.jspdf;
 
+  // Get URL parameters
   const params = new URLSearchParams(window.location.search);
   const candidateName = params.get("name") || "Unknown Candidate";
   const checklistParam = params.get("checklist") || "";
 
+  // Split checklist into array (Zoho uses semicolon ; separator)
   const checklist = checklistParam.split(";").filter(item => item.trim() !== "");
 
+  // Create new PDF
   const doc = new jsPDF();
 
-  // Use built-in Times font (supports basic Cyrillic)
-  doc.setFont("times");
+  // Load a font that supports Cyrillic
+  // Using Google Fonts Roboto Regular as base64
+  const fontUrl = "https://raw.githubusercontent.com/google/fonts/main/apache/roboto/Roboto-Regular.ttf";
+
+  const response = await fetch(fontUrl);
+  const fontBuffer = await response.arrayBuffer();
+  const fontBase64 = btoa(
+    new Uint8Array(fontBuffer)
+      .reduce((data, byte) => data + String.fromCharCode(byte), '')
+  );
+
+  doc.addFileToVFS("Roboto-Regular.ttf", fontBase64);
+  doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+  doc.setFont("Roboto");
 
   // Title
   doc.setFontSize(16);
@@ -30,22 +47,25 @@ window.onload = () => {
   doc.setFontSize(12);
   doc.text("Candidate: " + candidateName, 15, 35);
 
-  // Table data
+  // Prepare table data
   const tableData = checklist.length > 0
     ? checklist.map((item, i) => [i + 1, item.trim()])
     : [["-", "No checklist items selected"]];
 
+  // Generate table
   doc.autoTable({
     startY: 45,
     head: [['#', 'Checklist Item']],
     body: tableData,
-    styles: { font: "times", fontSize: 12, cellPadding: 4 },
+    styles: { font: "Roboto", fontSize: 12 },
     headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
     theme: 'grid',
-    columnStyles: { 0: { cellWidth: 10 }, 1: { cellWidth: 'auto' } },
   });
 
+  // Save PDF
   doc.save(candidateName.replace(/\s+/g, "_") + "_Checklist.pdf");
+
+  // Close tab after 2 seconds
   setTimeout(() => window.close(), 2000);
 };
 </script>
