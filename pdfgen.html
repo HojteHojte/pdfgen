@@ -3,49 +3,69 @@
 <head>
   <meta charset="utf-8">
   <title>Checklist PDF Generator</title>
+  <!-- jsPDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
 </head>
 <body>
 <script>
-  // Wait until jsPDF is ready
-  window.onload = () => {
-    const { jsPDF } = window.jspdf;
+window.onload = () => {
+  const { jsPDF } = window.jspdf;
 
-    // Get URL parameters
-    const params = new URLSearchParams(window.location.search);
-    const candidateName = params.get("name") || "Unknown Candidate";
-    const checklistParam = params.get("checklist") || "";
+  // Get parameters from URL
+  const params = new URLSearchParams(window.location.search);
+  const candidateName = params.get("name") || "Unknown Candidate";
+  const checklistParam = params.get("checklist") || "";
 
-    // Split checklist into array (Zoho uses semicolon ; separator)
-    const checklist = checklistParam.split(";");
+  // Split checklist into array (Zoho uses semicolon ; separator)
+  const checklist = checklistParam.split(";").filter(item => item.trim() !== "");
 
-    // Create new PDF
-    const doc = new jsPDF();
+  // Create new PDF
+  const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 15;
+  let y = 20;
 
-    let y = 20; // initial Y position
-    doc.setFontSize(14);
-    doc.text("Candidate: " + candidateName, 10, y);
-    y += 10;
-    doc.text("Checklist_Test_1:", 10, y);
-    y += 10;
+  // Title
+  doc.setFontSize(16);
+  doc.text("Candidate Checklist", pageWidth / 2, y, { align: "center" });
+  y += 10;
 
-    if (checklist.length > 0 && checklist[0] !== "") {
-      checklist.forEach((item, i) => {
-        doc.text((i + 1) + ". " + item.trim(), 10, y);
-        y += 10;
-      });
-    } else {
-      doc.text("No checklist items selected.", 10, y);
-    }
+  // Candidate name
+  doc.setFontSize(12);
+  doc.text("Candidate: " + candidateName, margin, y);
+  y += 10;
 
-    // Save PDF
-    doc.save(candidateName.replace(/\s+/g, "_") + "_Checklist.pdf");
+  // Checklist header
+  doc.setFontSize(12);
+  doc.text("Checklist:", margin, y);
+  y += 10;
 
-    // Close tab after 2 seconds
-    setTimeout(() => window.close(), 2000);
-  };
+  // Add checklist items
+  if (checklist.length > 0) {
+    checklist.forEach((item, i) => {
+      const lines = doc.splitTextToSize((i + 1) + ". " + item.trim(), pageWidth - 2 * margin);
+      if (y + lines.length * 7 > doc.internal.pageSize.getHeight() - 20) {
+        doc.addPage();
+        y = 20;
+      }
+      doc.text(lines, margin, y);
+      y += lines.length * 7;
+    });
+  } else {
+    doc.text("No checklist items selected.", margin, y);
+  }
+
+  // Save PDF
+  doc.save(candidateName.replace(/\s+/g, "_") + "_Checklist.pdf");
+
+  // Close tab after 2 seconds
+  setTimeout(() => window.close(), 2000);
+};
 </script>
-  OVO JE NEKI TEKST
 </body>
 </html>
-
