@@ -10,8 +10,18 @@
 </head>
 <body>
 <script>
-window.onload = () => {
+window.onload = async () => {
   const { jsPDF } = window.jspdf;
+
+  // ✅ Load a Unicode font (DejaVuSans)
+  const fontUrl = "https://cdn.jsdelivr.net/gh/vernnobile/webfonts/DejaVuSans.ttf";
+  const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
+
+  // ✅ Create PDF
+  const doc = new jsPDF();
+  doc.addFileToVFS("DejaVuSans.ttf", fontBytes);
+  doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
+  doc.setFont("DejaVuSans");
 
   // ✅ English task list
   const tasksEN = [
@@ -75,7 +85,7 @@ window.onload = () => {
     "Connecting and mounting the inverter"
   ];
 
-  // ✅ German task list (placeholder, you need to translate properly)
+  // ✅ German task list
   const tasksDE = [
     "Montage und Anschluss von Analogkameras",
     "Montage von Schalttafeln",
@@ -137,7 +147,7 @@ window.onload = () => {
     "Montage und Anschluss des Wechselrichters"
   ];
 
-  // ✅ Serbian task list (placeholder, you need to refine translation)
+  // ✅ Serbian task list
   const tasksSRB = [
     "Montaža i povezivanje analognih kamera",
     "Montaža elektro ormana",
@@ -153,8 +163,8 @@ window.onload = () => {
     "Kabliranje mrežnih instalacija",
     "Kabliranje kablova za napajanje kontrolnih ormara",
     "Kodiranje lampi i piktograma prema planu",
-    "Pustanje u rad elektro instalacija",
-    "Pustanje u rad instalacija za hitnu rasvetu",
+    "Puštanje u rad elektro instalacija",
+    "Puštanje u rad instalacija za hitnu rasvetu",
     "Povezivanje razvodnih kutija",
     "Povezivanje magnetskih kontakata",
     "Povezivanje kablova za napajanje",
@@ -216,10 +226,6 @@ window.onload = () => {
   // ✅ Build selection list
   const selectedList = selectedParam.split(";").map(i => i.trim()).filter(i => i !== "");
 
-  // ✅ Create PDF
-  const doc = new jsPDF();
-  doc.setFont("times");
-
   // Title
   doc.setFontSize(16);
   doc.text("Candidate Checklist", doc.internal.pageSize.getWidth() / 2, 15, { align: "center" });
@@ -240,7 +246,7 @@ window.onload = () => {
     startY: 35,
     head: [['Nr.', '✓', 'Description']],
     body: tableData,
-    styles: { font: "times", fontSize: 10, cellPadding: 3, valign: "middle" },
+    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3, valign: "middle" },
     headStyles: { fillColor: [230, 230, 230], textColor: [0, 0, 0], fontStyle: 'bold', halign: "center" },
     columnStyles: {
       0: { cellWidth: 10, halign: "center" },
