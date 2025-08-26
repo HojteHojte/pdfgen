@@ -13,7 +13,7 @@
 window.onload = () => {
   const { jsPDF } = window.jspdf;
 
-  // ====== Full English task list ======
+  // ====== Task Lists ======
   const tasksEN = [
     "Assembly and connection of analog cameras",
     "Assembly of electrical cabinets",
@@ -75,7 +75,6 @@ window.onload = () => {
     "Connecting and mounting the inverter"
   ];
 
-  // ====== Full German task list ======
   const tasksDE = [
     "Anschluss von Magnetkontakten",
     "Anschluss von Stromversorgungskabeln",
@@ -133,7 +132,6 @@ window.onload = () => {
     "Verlegung von Elektroinstallationen an Decken und Böden"
   ];
 
-  // ====== Full Serbian task list (UTF-8) ======
   const tasksSRB = [
     "Kabliranje alarmnih sistema",
     "Kabliranje automatizacije MCR prema dijagramu i planovima",
@@ -214,7 +212,7 @@ window.onload = () => {
   // ====== Create PDF ======
   const doc = new jsPDF();
 
-  // Embed font
+  // Times font
   doc.setFont("times");
 
   // Title
@@ -228,7 +226,7 @@ window.onload = () => {
   // Build table
   const tableData = taskList.map((task, i) => [
     i + 1,
-    selectedList.includes(task) ? "✔" : "",
+    selectedList.includes(task) ? "✓" : "",
     task
   ]);
 
