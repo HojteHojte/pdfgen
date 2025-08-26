@@ -194,9 +194,6 @@ window.onload = () => {
   "Instalacija ventilacije, kabliranje i povezivanje sistema"
   ];
 
-  // ✅ Sort German and Serbian lists alphabetically
-  tasksDE.sort((a, b) => a.localeCompare(b, 'de', { sensitivity: 'base' }));
-  tasksSRB.sort((a, b) => a.localeCompare(b, 'sr', { sensitivity: 'base' }));
 
   // ✅ Read URL parameters
   const params = new URLSearchParams(window.location.search);
