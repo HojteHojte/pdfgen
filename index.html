@@ -7,14 +7,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <!-- jsPDF-AutoTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-
 </head>
 <body>
 <script>
 window.onload = () => {
   const { jsPDF } = window.jspdf;
 
-  // ✅ English task list
+  // ====== Paste your Base64 DejaVuSans.ttf string here ======
+  const DejaVuSansFont = "PASTE-YOUR-BASE64-STRING-HERE";
+
+  // ====== Full English task list ======
   const tasksEN = [
     "Assembly and connection of analog cameras",
     "Assembly of electrical cabinets",
@@ -76,7 +78,7 @@ window.onload = () => {
     "Connecting and mounting the inverter"
   ];
 
-  // ✅ German task list
+  // ====== Full German task list ======
   const tasksDE = [
     "Anschluss von Magnetkontakten",
     "Anschluss von Stromversorgungskabeln",
@@ -134,7 +136,7 @@ window.onload = () => {
     "Verlegung von Elektroinstallationen an Decken und Böden"
   ];
 
-  // ✅ Serbian task list (UTF-8 + sorted)
+  // ====== Full Serbian task list (UTF-8) ======
   const tasksSRB = [
     "Kabliranje alarmnih sistema",
     "Kabliranje automatizacije MCR prema dijagramu i planovima",
@@ -195,59 +197,59 @@ window.onload = () => {
     "Instalacija ventilacije, kabliranje i povezivanje sistema"
   ];
 
-  // ✅ Read URL parameters
+  // ====== Read URL parameters ======
   const params = new URLSearchParams(window.location.search);
-  const candidateName = decodeURIComponent(params.get("name") || "Unknown Candidate");
+  const candidateName = decodeURIComponent(params.get("name") || "Unknown_Candidate");
   const selectedParam = decodeURIComponent(params.get("checklist") || "");
   const lang = (params.get("lang") || "EN").toUpperCase();
 
-  // ✅ Select correct task list
+  // ====== Select correct task list ======
   let taskList;
-  switch (lang) {
+  switch(lang){
     case "DE": taskList = tasksDE; break;
     case "SRB": taskList = tasksSRB; break;
     default: taskList = tasksEN;
   }
 
-  // ✅ Build selection list
+  // ====== Build selection list ======
   const selectedList = selectedParam.split(";").map(i => i.trim()).filter(i => i !== "");
 
-  // ✅ Create PDF
+  // ====== Create PDF ======
   const doc = new jsPDF();
+
+  // Embed font
+  doc.addFileToVFS("DejaVuSans.ttf", DejaVuSansFont);
+  doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
+  doc.setFont("DejaVuSans");
 
   // Title
   doc.setFontSize(16);
-  doc.text("Candidate Checklist", doc.internal.pageSize.getWidth() / 2, 15, { align: "center" });
+  doc.text("Candidate Checklist", doc.internal.pageSize.getWidth()/2, 15, {align:"center"});
 
   // Candidate name
   doc.setFontSize(12);
   doc.text("Name: " + candidateName, 15, 25);
 
-  // Build table body
+  // Build table
   const tableData = taskList.map((task, i) => [
     i + 1,
     selectedList.includes(task) ? "✔" : "",
     task
   ]);
 
-  // Table
   doc.autoTable({
     startY: 35,
     head: [['Nr.', '✓', 'Description']],
     body: tableData,
     styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3, valign: "middle" },
     headStyles: { fillColor: [230, 230, 230], textColor: [0, 0, 0], fontStyle: 'bold', halign: "center" },
-    columnStyles: {
-      0: { cellWidth: 10, halign: "center" },
-      1: { cellWidth: 10, halign: "center" },
-      2: { cellWidth: "auto" }
-    },
+    columnStyles: { 0: { cellWidth: 10, halign:"center" }, 1: { cellWidth: 10, halign:"center" }, 2: { cellWidth: "auto" } },
     theme: "grid",
-    alternateRowStyles: { fillColor: [245, 245, 245] }
+    alternateRowStyles: { fillColor: [245,245,245] }
   });
 
   // Save PDF
-  doc.save(candidateName.replace(/\s+/g, "_") + "_Checklist.pdf");
+  doc.save(candidateName.replace(/\s+/g,"_") + "_Checklist.pdf");
 };
 </script>
 </body>
