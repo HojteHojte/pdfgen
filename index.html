@@ -3,18 +3,22 @@
 <head>
   <meta charset="utf-8">
   <title>Checklist PDF Generator</title>
-
-  <script src="DejaVuSans-normal.js"></script>
-
   <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <!-- jsPDF-AutoTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <!-- DejaVuSans font -->
+  <script src="DejaVuSans-normal.js"></script>
 </head>
 <body>
 <script>
 window.onload = () => {
   const { jsPDF } = window.jspdf;
+  
+
+  doc.addFileToVFS("DejaVuSans.ttf", DejaVuSansNormal);
+  doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
+  doc.setFont("DejaVuSans");
 
   // ====== Task Lists ======
   const tasksEN = [
@@ -241,6 +245,8 @@ window.onload = () => {
   // Candidate name
   doc.setFontSize(12);
   doc.text("Name: " + candidateName, 15, 25);
+
+   
 
   // Build table
   const tableData = taskList.map((task, i) => [
