@@ -21,41 +21,46 @@ window.onload = () => {
   // Split checklist items
   const checklist = checklistParam.split(";").filter(item => item.trim() !== "");
 
+  // Example checkmarks (you can pass them also from URL in same order)
+  const checkedIndexes = [6, 7, 10, 11, 12, 19]; // indexes from your screenshot (1-based)
+
   // Create PDF
   const doc = new jsPDF();
-
-  // Use built-in 'times' font which supports Latin extended characters
-  doc.setFont("times"); 
+  doc.setFont("times");
 
   // Title
   doc.setFontSize(16);
-  doc.text("Candidate Checklist", doc.internal.pageSize.getWidth() / 2, 20, { align: "center" });
+  doc.text("Checklist", doc.internal.pageSize.getWidth() / 2, 15, { align: "center" });
 
   // Candidate name
   doc.setFontSize(12);
-  doc.text("Candidate: " + candidateName, 15, 35);
+  doc.text("Name: " + candidateName, doc.internal.pageSize.getWidth() - 15, 25, { align: "right" });
 
-  // Table data
-  const tableData = checklist.length > 0
-    ? checklist.map((item, i) => [i + 1, item.trim()])
-    : [["-", "No checklist items selected"]];
+  // Build table body
+  const tableData = (checklist.length > 0 ? checklist : ["No checklist items"]).map((item, i) => [
+    i + 1,
+    checkedIndexes.includes(i + 1) ? "✔" : "",
+    item.trim()
+  ]);
 
-  // Generate table
+  // Table
   doc.autoTable({
-    startY: 45,
-    head: [['#', 'Checklist Item']],
+    startY: 35,
+    head: [['Nr.', '✓', 'Description']],
     body: tableData,
-    styles: { font: "times", fontSize: 12, cellPadding: 4 },
-    headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+    styles: { font: "times", fontSize: 11, cellPadding: 3, halign: "left", valign: "middle" },
+    headStyles: { fillColor: [255, 255, 255], textColor: [0, 0, 0], fontStyle: 'bold', halign: 'center' },
+    columnStyles: {
+      0: { cellWidth: 15, halign: 'center' },
+      1: { cellWidth: 15, halign: 'center' },
+      2: { cellWidth: 'auto' }
+    },
     theme: 'grid',
-    columnStyles: { 0: { cellWidth: 10 }, 1: { cellWidth: 'auto' } },
+    alternateRowStyles: { fillColor: [220, 230, 250] }
   });
 
   // Save PDF
   doc.save(candidateName.replace(/\s+/g, "_") + "_Checklist.pdf");
-
-  // Close window after 2 seconds
-  setTimeout(() => window.close(), 2000);
 };
 </script>
 </body>
