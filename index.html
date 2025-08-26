@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>Checklist PDF Generator</title>
-  <!-- jsPDF library -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- jsPDF-AutoTable plugin -->
+  <!-- jsPDF-AutoTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
@@ -13,50 +13,113 @@
 window.onload = () => {
   const { jsPDF } = window.jspdf;
 
-  // Read URL parameters
+  // ✅ Full master list of tasks (alphabetical order)
+  const allTasks = [
+    "Assemby and connection of DVR with cameras",
+    "Assemby and connection of network switches , IT networks",
+    "Assemby and installation of SMART HOUSE equipment",
+    "Assemby of the PLC generator",
+    "Assembly and connection of analog cameras",
+    "Assembly of electrical cabinets",
+    "Assembly of wardrobes for swiches,",
+    "Cabling alarm systems",
+    "Cabling and connection of equipment in SMART HOUSE",
+    "Cabling and connection of PLC generator with asynchronous motor",
+    "Cabling and installation of speakers",
+    "Cabling automation MCR according to the diagram and plans",
+    "Cabling emergency lighting installation",
+    "Cabling fire alarm rings or loops",
+    "Cabling intercom systems",
+    "Cabling network installations",
+    "Cabling power supply cables for control panels",
+    "Coding lamps and pictograms according to the plan",
+    "Commissioning electrical installations",
+    "Commissioning the emergency lighting control panel",
+    "Connecting distribution boxes",
+    "Connecting magnetic contacts",
+    "Connecting power supply cables",
+    "Connection and assemby of readers on acces control",
+    "Connection and cabling of photovoltaic panels",
+    "Installation and conection of the wifi router",
+    "Installation and connection of fire alarm holders",
+    "Installation and connection of intercom systems",
+    "Installation and connection of IP cameras",
+    "Installation and connection of low-voltage systems",
+    "Installation and connection of manual fire alarms",
+    "Installation and connection of optical cables",
+    "Installation and connection of sirens",
+    "Installation and connection of sockets for network installations",
+    "Installation and connection of strobe lights",
+    "Installation of the emergency lighting control panel",
+    "Installation of ventilation, cabling and connection systems",
+    "Installation of air conditioners and cabling",
+    "Installation of cable trays according to the plan",
+    "Installation of lamps and pictograms",
+    "Installation of MCR control panels",
+    "Installation of sockets, switches, lamps, and sensors",
+    "Laying electrical installations on ceilings and floors",
+    "Measurement of the phase position at the output of the inverter",
+    "Measuring lighting in the emergency lighting installation",
+    "Measuring network installations",
+    "Measuring the emergency lighting installation",
+    "Measuring the functionality of electrical installations",
+    "Reading alarm plans",
+    "Reading automation plans (single-line diagrams and plans)",
+    "Reading electrical installation plans",
+    "Reading emergency lighting plans",
+    "Reading fire alarm system diagrams",
+    "Reading network installation plans",
+    "Reading speaker plans",
+    "Reading and understanding cable tray plans",
+    "Reviewing installation plans",
+    "Reviewing network installations",
+    "Reviewing the emergency lighting installation",
+    "Setting up the DVR for network access",
+    "Wiring control panels and devices for automation",
+    "Wiring electrical cabinets according to the single-line diagram",
+    "connecting and mounting the inverter",
+    "Installation and connection of IP phones"
+  ];
+
+  // ✅ Read URL parameters
   const params = new URLSearchParams(window.location.search);
   const candidateName = decodeURIComponent(params.get("name") || "Unknown Candidate");
-  const checklistParam = decodeURIComponent(params.get("checklist") || "");
+  const selectedParam = decodeURIComponent(params.get("checklist") || "");
+  const selectedList = selectedParam.split(";").map(i => i.trim()).filter(i => i !== "");
 
-  // Split checklist items
-  const checklist = checklistParam.split(";").filter(item => item.trim() !== "");
-
-  // Example checkmarks (you can pass them also from URL in same order)
-  const checkedIndexes = [6, 7, 10, 11, 12, 19]; // indexes from your screenshot (1-based)
-
-  // Create PDF
+  // ✅ Create PDF
   const doc = new jsPDF();
   doc.setFont("times");
 
   // Title
   doc.setFontSize(16);
-  doc.text("Checklist", doc.internal.pageSize.getWidth() / 2, 15, { align: "center" });
+  doc.text("Candidate Checklist", doc.internal.pageSize.getWidth() / 2, 15, { align: "center" });
 
   // Candidate name
   doc.setFontSize(12);
-  doc.text("Name: " + candidateName, doc.internal.pageSize.getWidth() - 15, 25, { align: "right" });
+  doc.text("Name: " + candidateName, 15, 25);
 
-  // Build table body
-  const tableData = (checklist.length > 0 ? checklist : ["No checklist items"]).map((item, i) => [
+  // ✅ Build table body
+  const tableData = allTasks.map((task, i) => [
     i + 1,
-    checkedIndexes.includes(i + 1) ? "✔" : "",
-    item.trim()
+    selectedList.includes(task) ? "✔" : "",
+    task
   ]);
 
-  // Table
+  // ✅ Create table
   doc.autoTable({
     startY: 35,
     head: [['Nr.', '✓', 'Description']],
     body: tableData,
-    styles: { font: "times", fontSize: 11, cellPadding: 3, halign: "left", valign: "middle" },
-    headStyles: { fillColor: [255, 255, 255], textColor: [0, 0, 0], fontStyle: 'bold', halign: 'center' },
+    styles: { font: "times", fontSize: 10, cellPadding: 3, valign: "middle" },
+    headStyles: { fillColor: [230, 230, 230], textColor: [0, 0, 0], fontStyle: 'bold', halign: "center" },
     columnStyles: {
-      0: { cellWidth: 15, halign: 'center' },
-      1: { cellWidth: 15, halign: 'center' },
-      2: { cellWidth: 'auto' }
+      0: { cellWidth: 10, halign: "center" },
+      1: { cellWidth: 10, halign: "center" },
+      2: { cellWidth: "auto" }
     },
-    theme: 'grid',
-    alternateRowStyles: { fillColor: [220, 230, 250] }
+    theme: "grid",
+    alternateRowStyles: { fillColor: [245, 245, 245] }
   });
 
   // Save PDF
