@@ -13,7 +13,7 @@
 window.onload = () => {
   const { jsPDF } = window.jspdf;
 
-  // ✅ English tasks
+  // ✅ English task list
   const tasksEN = [
     "Assembly and connection of analog cameras",
     "Assembly of electrical cabinets",
@@ -75,15 +75,29 @@ window.onload = () => {
     "Connecting and mounting the inverter"
   ];
 
-  // ✅ German tasks (sorted)
+  // ✅ German task list
   const tasksDE = [
-    "Anschluss und Montage von Lesegeräten für Zutrittskontrolle",
+    "Montage und Anschluss von Analogkameras",
+    "Montage von Schalttafeln",
+    "Montage von Schränken für Schalter",
+    "Verkabelung von Alarmsystemen",
+    "Verkabelung und Anschluss von Geräten im SMART HOUSE",
+    "Verkabelung und Anschluss des PLC-Generators mit Asynchronmotor",
+    "Verkabelung und Installation von Lautsprechern",
+    "Verkabelung der Automatisierung MCR gemäß Schaltplan",
+    "Verkabelung der Notbeleuchtung",
+    "Verkabelung von Brandmelder-Ringen oder Schleifen",
+    "Verkabelung von Gegensprechanlagen",
+    "Verkabelung von Netzwerkinstallationen",
+    "Verkabelung von Stromversorgungskabeln für Schalttafeln",
+    "Codierung von Lampen und Piktogrammen gemäß Plan",
+    "Inbetriebnahme von Elektroinstallationen",
+    "Inbetriebnahme der Notbeleuchtung",
+    "Anschluss von Verteilerdosen",
     "Anschluss von Magnetkontakten",
     "Anschluss von Stromversorgungskabeln",
-    "Anschluss von Verteilerdosen",
-    "Codierung von Lampen und Piktogrammen gemäß Plan",
-    "Einrichtung des DVR für Netzwerkzugriff",
-    "Installation und Anschluss von Blitzleuchten",
+    "Anschluss und Montage von Lesegeräten für Zutrittskontrolle",
+    "Verkabelung und Anschluss von Photovoltaikmodulen",
     "Installation und Anschluss von Brandmelderhaltern",
     "Installation und Anschluss von Gegensprechanlagen",
     "Installation und Anschluss von IP-Kameras",
@@ -93,92 +107,101 @@ window.onload = () => {
     "Installation und Anschluss von Glasfaserkabeln",
     "Installation und Anschluss von Sirenen",
     "Installation und Anschluss von Steckdosen für Netzwerke",
+    "Installation und Anschluss von Blitzleuchten",
     "Installation von Klimaanlagen und Verkabelung",
+    "Montage von Kabeltrassen nach Plan",
     "Installation von Lampen und Piktogrammen",
-    "Installation von Lüftung, Verkabelung und Anschlusssystemen",
     "Installation von MCR-Steuerungstafeln",
-    "Inbetriebnahme der Notbeleuchtung",
-    "Inbetriebnahme von Elektroinstallationen",
+    "Installation von Steckdosen, Schaltern, Lampen und Sensoren",
+    "Installation von Lüftung, Verkabelung und Anschlusssystemen",
+    "Verlegung von Elektroinstallationen an Decken und Böden",
+    "Messung der Phasenlage am Ausgang des Wechselrichters",
+    "Messung der Beleuchtung in der Notbeleuchtung",
+    "Messung von Netzwerkinstallationen",
+    "Messung der Notbeleuchtung",
+    "Messung der Funktionalität elektrischer Installationen",
     "Lesen von Alarmplänen",
     "Lesen von Automatisierungsplänen (Einliniendiagramme)",
     "Lesen von Elektroinstallationsplänen",
-    "Lesen von Lautsprecherplänen",
-    "Lesen von Netzwerkinstallationsplänen",
     "Lesen von Notbeleuchtungsplänen",
     "Lesen von Brandmeldesystemplänen",
+    "Lesen von Netzwerkinstallationsplänen",
+    "Lesen von Lautsprecherplänen",
     "Lesen und Verstehen von Kabeltrassenplänen",
-    "Montage und Anschluss des Wechselrichters",
-    "Montage und Anschluss von Analogkameras",
-    "Montage von Kabeltrassen nach Plan",
-    "Montage von Schalttafeln",
-    "Montage von Schränken für Schalter",
+    "Überprüfung von Installationsplänen",
+    "Überprüfung von Netzwerkinstallationen",
+    "Überprüfung der Notbeleuchtungsinstallation",
+    "Einrichtung des DVR für Netzwerkzugriff",
     "Verdrahtung von Schalttafeln und Automatisierungsgeräten",
     "Verdrahtung von Schaltschränken nach Einliniendiagramm",
-    "Verkabelung der Automatisierung MCR gemäß Schaltplan",
-    "Verkabelung der Notbeleuchtung",
-    "Verkabelung von Alarmsystemen",
-    "Verkabelung von Brandmelder-Ringen oder Schleifen",
-    "Verkabelung von Gegensprechanlagen",
-    "Verkabelung von Netzwerkinstallationen",
-    "Verkabelung von Stromversorgungskabeln für Schalttafeln",
-    "Verkabelung und Anschluss des PLC-Generators mit Asynchronmotor",
-    "Verkabelung und Anschluss von Geräten im SMART HOUSE",
-    "Verkabelung der Phasenlage am Ausgang des Wechselrichters"
-  ].sort();
+    "Montage und Anschluss des Wechselrichters"
+  ];
 
-  // ✅ Serbian tasks (sorted)
+  // ✅ Serbian task list
   const tasksSRB = [
-    "Čitanje i razumevanje planova kablovskih kanala",
-    "Čitanje planova elektro instalacija",
-    "Čitanje planova instalacija za hitnu rasvetu",
-    "Čitanje planova mrežnih instalacija",
-    "Čitanje planova sistema protivpožarne zaštite",
-    "Čitanje planova zvučnika",
-    "Čitanje planova za alarme",
-    "Čitanje planova automatizacije (jednolinijski dijagrami)",
-    "Instalacija klima uređaja i kabliranje",
-    "Instalacija MCR kontrolnih ormara",
-    "Instalacija lampi i piktograma",
+    "Montaža i povezivanje analognih kamera",
+    "Montaža elektro ormana",
+    "Montaža ormara za prekidače",
+    "Kabliranje alarmnih sistema",
+    "Kabliranje i povezivanje opreme u SMART HOUSE",
+    "Kabliranje i povezivanje PLC generatora sa asinhronim motorom",
+    "Kabliranje i instalacija zvučnika",
+    "Kabliranje automatizacije MCR prema dijagramu i planovima",
+    "Kabliranje instalacija za hitnu rasvetu",
+    "Kabliranje prstenova ili petlji protivpožarnih alarma",
+    "Kabliranje interfonskih sistema",
+    "Kabliranje mrežnih instalacija",
+    "Kabliranje kablova za napajanje kontrolnih ormara",
+    "Kodiranje lampi i piktograma prema planu",
+    "Pustanje u rad elektro instalacija",
+    "Pustanje u rad instalacija za hitnu rasvetu",
+    "Povezivanje razvodnih kutija",
+    "Povezivanje magnetskih kontakata",
+    "Povezivanje kablova za napajanje",
+    "Povezivanje i montaža čitača na kontrolu pristupa",
+    "Kabliranje i povezivanje fotonaponskih panela",
+    "Instalacija i povezivanje držača protivpožarnih alarma",
+    "Instalacija i povezivanje interfonskih sistema",
     "Instalacija i povezivanje IP kamera",
     "Instalacija i povezivanje IP telefona",
     "Instalacija i povezivanje niskonaponskih sistema",
-    "Instalacija i povezivanje optičkih kablova",
     "Instalacija i povezivanje ručnih protivpožarnih alarma",
+    "Instalacija i povezivanje optičkih kablova",
     "Instalacija i povezivanje sirena",
-    "Instalacija i povezivanje svetlosnih signalizacija",
     "Instalacija i povezivanje utičnica za mrežne instalacije",
-    "Instalacija i povezivanje držača protivpožarnih alarma",
-    "Instalacija i povezivanje interfonskih sistema",
-    "Kabliranje alarmnih sistema",
-    "Kabliranje automatizacije MCR prema dijagramu i planovima",
-    "Kabliranje i povezivanje PLC generatora sa asinhronim motorom",
-    "Kabliranje i povezivanje opreme u SMART HOUSE",
-    "Kabliranje instalacija za hitnu rasvetu",
-    "Kabliranje interfonskih sistema",
-    "Kabliranje mrežnih instalacija",
-    "Kabliranje prstenova ili petlji protivpožarnih alarma",
-    "Kabliranje i instalacija zvučnika",
-    "Merenje faznog položaja na izlazu invertera",
-    "Merenje funkcionalnosti elektro instalacija",
-    "Merenje instalacija za hitnu rasvetu",
-    "Merenje mrežnih instalacija",
-    "Merenje rasvete u instalacijama za hitnu rasvetu",
-    "Ožičavanje kontrolnih ormara i uređaja za automatizaciju",
-    "Ožičavanje elektro ormara prema jednolinijskom dijagramu",
-    "Povezivanje i montaža čitača na kontrolu pristupa",
-    "Povezivanje i montaža invertera",
-    "Povezivanje kablova za napajanje",
-    "Povezivanje magnetskih kontakata",
-    "Povezivanje razvodnih kutija",
-    "Polaganje elektroinstalacija na plafonima i podovima",
+    "Instalacija i povezivanje svetlosnih signalizacija",
+    "Instalacija klima uređaja i kabliranje",
     "Postavljanje kablovskih kanala prema planu",
-    "Pregled mrežnih instalacija",
+    "Instalacija lampi i piktograma",
+    "Instalacija MCR kontrolnih ormara",
+    "Instalacija utičnica, prekidača, lampi i senzora",
+    "Instalacija ventilacije, kabliranje i povezivanje sistema",
+    "Polaganje elektroinstalacija na plafonima i podovima",
+    "Merenje faznog položaja na izlazu invertera",
+    "Merenje rasvete u instalacijama za hitnu rasvetu",
+    "Merenje mrežnih instalacija",
+    "Merenje instalacija za hitnu rasvetu",
+    "Merenje funkcionalnosti elektro instalacija",
+    "Čitanje planova za alarme",
+    "Čitanje planova automatizacije (jednolinijski dijagrami)",
+    "Čitanje planova elektro instalacija",
+    "Čitanje planova instalacija za hitnu rasvetu",
+    "Čitanje planova sistema protivpožarne zaštite",
+    "Čitanje planova mrežnih instalacija",
+    "Čitanje planova zvučnika",
+    "Čitanje i razumevanje planova kablovskih kanala",
     "Pregled planova instalacija",
+    "Pregled mrežnih instalacija",
     "Pregled instalacija za hitnu rasvetu",
     "Podešavanje DVR-a za pristup mreži",
-    "Pustanje u rad instalacija za hitnu rasvetu",
-    "Pustanje u rad elektro instalacija"
-  ].sort();
+    "Ožičavanje kontrolnih ormara i uređaja za automatizaciju",
+    "Ožičavanje elektro ormara prema jednolinijskom dijagramu",
+    "Povezivanje i montaža invertera"
+  ];
+
+  // ✅ Sort German and Serbian lists alphabetically
+  tasksDE.sort((a, b) => a.localeCompare(b, 'de', { sensitivity: 'base' }));
+  tasksSRB.sort((a, b) => a.localeCompare(b, 'sr', { sensitivity: 'base' }));
 
   // ✅ Read URL parameters
   const params = new URLSearchParams(window.location.search);
@@ -191,7 +214,7 @@ window.onload = () => {
   switch (lang) {
     case "DE": taskList = tasksDE; break;
     case "SRB": taskList = tasksSRB; break;
-default: taskList = tasksEN;
+    default: taskList = tasksEN;
   }
 
   // ✅ Build selection list
@@ -199,7 +222,7 @@ default: taskList = tasksEN;
 
   // ✅ Create PDF
   const doc = new jsPDF();
-  doc.setFont("times"); // built-in font, works for EN, SRB Latin, ✔
+  doc.setFont("times");
 
   // Title
   doc.setFontSize(16);
