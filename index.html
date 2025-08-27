@@ -7,6 +7,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <!-- jsPDF-AutoTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  
+  <script src="DejaVuSans-normal.js"></script>
 </head>
 <body>
 <script>
@@ -227,8 +229,13 @@ window.onload = () => {
   // ====== Create PDF ======
   const doc = new jsPDF();
 
+// ====== Register Unicode font ======
+  doc.addFileToVFS("DejaVuSans.ttf", DejaVuSansNormal);
+  doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
+  doc.setFont("DejaVuSans");
+  
   // Times font
-  doc.setFont("NotoSans");
+// doc.setFont("NotoSans");
 
   // Title
   doc.setFontSize(16);
@@ -249,7 +256,7 @@ window.onload = () => {
     startY: 35,
     head: [['Nr.', '✓', 'Description']],
     body: tableData,
-    styles: { font: "NotoSans", fontSize: 10, cellPadding: 3, valign: "middle" },
+    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3, valign: "middle" },
     headStyles: { fillColor: [230, 230, 230], textColor: [0, 0, 0], fontStyle: 'bold', halign: "center" },
     columnStyles: { 0: { cellWidth: 10, halign:"center" }, 1: { cellWidth: 10, halign:"center" }, 2: { cellWidth: "auto" } },
     theme: "grid",
