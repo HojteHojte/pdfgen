@@ -228,7 +228,7 @@ window.onload = () => {
   const doc = new jsPDF();
 
   // Times font
-  doc.setFont("times");
+  doc.setFont("DejaVuSans");
 
   // Title
   doc.setFontSize(16);
@@ -249,7 +249,7 @@ window.onload = () => {
     startY: 35,
     head: [['Nr.', '✓', 'Description']],
     body: tableData,
-    styles: { font: "times", fontSize: 10, cellPadding: 3, valign: "middle" },
+    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3, valign: "middle" },
     headStyles: { fillColor: [230, 230, 230], textColor: [0, 0, 0], fontStyle: 'bold', halign: "center" },
     columnStyles: { 0: { cellWidth: 10, halign:"center" }, 1: { cellWidth: 10, halign:"center" }, 2: { cellWidth: "auto" } },
     theme: "grid",
