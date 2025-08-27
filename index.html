@@ -7,8 +7,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <!-- jsPDF-AutoTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-  <!-- NotoSans font (tvoj JS fajl) -->
-  <script src="NotoSans-Regular-normal.js"></script>
+  <!-- DejaVuSans font -->
+  <script src="DejaVuSans-normal.js"></script>
 </head>
 <body>
 <script>
@@ -20,10 +20,10 @@ window.onload = () => {
     "Assembly and connection of analog cameras",
     "Assembly and connection of DVR with cameras",
     "Assembly of electrical cabinets",
-    "Assembly of wardrobes for switches",
-    "Assembly and connection of network switches, IT networks",
-    "Assembly and installation of SMART HOUSE equipment",
-    "Assembly of the PLC generator",
+    "Assembly of wardrobes for swiches",
+    "Assemby and connection of network switches, IT networks",
+    "Assemby and installation of SMART HOUSE equipment",
+    "Assemby of the PLC generator",
     "Cabling alarm systems",
     "Cabling and connection of equipment in SMART HOUSE",
     "Cabling and connection of PLC generator with asynchronous motor",
@@ -40,7 +40,7 @@ window.onload = () => {
     "Connecting distribution boxes",
     "Connecting magnetic contacts",
     "Connecting power supply cables",
-    "Connection and assembly of readers on access control",
+    "Connection and assemby of readers on acces control",
     "Connection and cabling of photovoltaic panels",
     "Coding lamps and pictograms according to the plan",
     "Installation and connection of IP cameras",
@@ -52,7 +52,7 @@ window.onload = () => {
     "Installation and connection of sockets for network installations",
     "Installation and connection of sirens",
     "Installation and connection of strobe lights",
-    "Installation and connection of the WiFi router",
+    "Installation and conection of the wifi router",
     "Installation air conditioners and cabling",
     "Installation emergency lighting control panel",
     "Installation fire alarm holders",
@@ -141,6 +141,7 @@ window.onload = () => {
     "Verkabelung und Anschluss von Lautsprechern",
     "Verdrahtung von Schaltschränken nach Einlinienschaltplan",
     "Verdrahtung von Schaltschränken und Geräten für Automatisierung"
+
   ];
 
   const tasksSRB = [
@@ -229,23 +230,26 @@ window.onload = () => {
   // ====== Create PDF ======
   const doc = new jsPDF();
 
-  // ====== Add NotoSans font (Unicode) ======
-  doc.addFileToVFS("NotoSans-Regular-normal.ttf", NotoSansRegular); // varijabla iz NotoSans_Regular.js
-  doc.addFont("NotoSans-Regular-normal.ttf", "NotoSans-Regular", "normal");
-  doc.setFont("NotoSans-Regular");
+  // === Registration of the DejaVuSans font ===
+  doc.addFileToVFS("DejaVuSans.ttf", DejaVuSansNormal);
+  doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
+  doc.setFont("DejaVuSans");
 
-  // ====== Title ======
+  // Times font
+  doc.setFont("DejaVuSans");
+
+  // Title
   doc.setFontSize(16);
   doc.text("Candidate Checklist", doc.internal.pageSize.getWidth()/2, 15, {align:"center"});
 
-  // ====== Candidate name ======
+  // Candidate name
   doc.setFontSize(12);
   doc.text("Name: " + candidateName, 15, 25);
 
-  // ====== Table ======
+  // Build table
   const tableData = taskList.map((task, i) => [
     i + 1,
-    selectedList.includes(task) ? "✓" : "", 
+    selectedList.includes(task) ? "✓" : "",
     task
   ]);
 
@@ -253,14 +257,14 @@ window.onload = () => {
     startY: 35,
     head: [['Nr.', '✓', 'Description']],
     body: tableData,
-    styles: { font: "NotoSans-Regular", fontSize: 10, cellPadding: 3, valign: "middle" },
+    styles: { font: "DejaVuSans", fontSize: 10, cellPadding: 3, valign: "middle" },
     headStyles: { fillColor: [230, 230, 230], textColor: [0, 0, 0], fontStyle: 'bold', halign: "center" },
     columnStyles: { 0: { cellWidth: 10, halign:"center" }, 1: { cellWidth: 10, halign:"center" }, 2: { cellWidth: "auto" } },
     theme: "grid",
     alternateRowStyles: { fillColor: [245,245,245] }
   });
 
-  // ====== Save PDF ======
+  // Save PDF
   doc.save(candidateName.replace(/\s+/g,"_") + "_Checklist.pdf");
 };
 </script>
