@@ -230,6 +230,11 @@ window.onload = () => {
   // ====== Create PDF ======
   const doc = new jsPDF();
 
+  // === Registration of the DejaVuSans font ===
+  doc.addFileToVFS("DejaVuSans.ttf", DejaVuSansNormal);
+  doc.addFont("DejaVuSans.ttf", "DejaVuSans", "normal");
+  doc.setFont("DejaVuSans");
+
   // Times font
   doc.setFont("times");
 
@@ -240,8 +245,6 @@ window.onload = () => {
   // Candidate name
   doc.setFontSize(12);
   doc.text("Name: " + candidateName, 15, 25);
-
-   
 
   // Build table
   const tableData = taskList.map((task, i) => [
