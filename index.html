@@ -230,7 +230,7 @@ window.onload = () => {
   const doc = new jsPDF();
 
   // ====== Add NotoSans font (Unicode) ======
-  doc.addFileToVFS("NotoSans-Regular-normal.ttf", font); // varijabla iz NotoSans_Regular.js
+  doc.addFileToVFS("NotoSans-Regular-normal.ttf", NotoSansRegular); // varijabla iz NotoSans_Regular.js
   doc.addFont("NotoSans-Regular-normal.ttf", "NotoSans-Regular", "normal");
   doc.setFont("NotoSans-Regular");
 
@@ -245,7 +245,7 @@ window.onload = () => {
   // ====== Table ======
   const tableData = taskList.map((task, i) => [
     i + 1,
-    selectedList.includes(task) ? "\u2713" : "", // Unicode checkmark
+    selectedList.includes(task) ? "✓" : "", 
     task
   ]);
 
