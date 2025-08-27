@@ -230,7 +230,7 @@ window.onload = () => {
   const doc = new jsPDF();
 
   // ====== Add NotoSans font (Unicode) ======
-  doc.addFileToVFS("NotoSans-Regular-normal.ttf", NotoSansRegular); // varijabla iz NotoSans_Regular.js
+  doc.addFileToVFS("NotoSans-Regular-normal.ttf", font); // varijabla iz NotoSans_Regular.js
   doc.addFont("NotoSans-Regular-normal.ttf", "NotoSans-Regular", "normal");
   doc.setFont("NotoSans-Regular");
 
